@@ -5,11 +5,13 @@ import (
 	"net"
 )
 
-const host = ""
-const port = ":8080"
+const (
+	host = ""
+	port = "8080"
+)
 
 func main() {
-	if listener, err := net.Listen("tcp", port); err != nil {
+	if listener, err := net.Listen("tcp", host+":"+port); err != nil {
 		fmt.Println(err.Error())
 	} else {
 		defer listener.Close()
