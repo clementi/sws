@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 )
 
 const (
@@ -11,17 +12,22 @@ const (
 )
 
 func main() {
-	if listener, err := net.Listen("tcp", host+":"+port); err != nil {
-		fmt.Println(err.Error())
-	} else {
-		defer listener.Close()
-		for {
-			if conn, err := listener.Accept(); err != nil {
-				fmt.Println(err.Error())
-			} else {
-				go handleConnection(conn)
-			}
+	listener, err := net.Listen("tcp", host+":"+port)
+	if err != nil {
+		fmt.Println("Error:", err.Error())
+		os.Exit(1)
+	}
+
+	defer listener.Close()
+	fmt.Println("Listening on " + host + ":" + port)
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println("Error:", err.Error())
+			os.Exit(1)
 		}
+		go handleConnection(conn)
 	}
 }
 
