@@ -30,8 +30,6 @@ func handleConnection(conn net.Conn) error {
 		return err
 	}
 
-	fmt.Println(string(requestData))
-
 	response := `
 HTTP/1.1 200 OK
 Content-Type: text/plain
