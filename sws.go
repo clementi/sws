@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	host = ""
-	port = "8080"
+	host            = ""
+	port            = "8080"
+	reqBufSizeBytes = 8192
 )
 
 func main() {
@@ -32,9 +33,9 @@ func main() {
 }
 
 func handleConnection(conn net.Conn) error {
-	requestData := make([]byte, 1024)
+	requestBuf := make([]byte, reqBufSizeBytes)
 
-	if _, err := conn.Read(requestData); err != nil {
+	if _, err := conn.Read(requestBuf); err != nil {
 		return err
 	}
 
