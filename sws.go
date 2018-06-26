@@ -38,8 +38,7 @@ func handleConnection(conn net.Conn) error {
 		return err
 	}
 
-	response := `
-HTTP/1.1 200 OK
+	response := `HTTP/1.1 200 OK
 Content-Type: text/plain
 
 Hello, World!`
