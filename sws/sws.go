@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 )
 
 const (
@@ -38,6 +39,11 @@ func handleConnection(conn net.Conn) error {
 	if _, err := conn.Read(requestBuf); err != nil {
 		return err
 	}
+
+	request := string(requestBuf)
+	lines := strings.Split(request, "\n")
+
+	fmt.Println(lines[0])
 
 	response := `HTTP/1.1 200 OK
 Content-Type: text/plain
