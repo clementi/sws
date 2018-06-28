@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"strings"
+
+	"github.com/clementi/sws/http"
 )
 
 const (
@@ -40,10 +41,12 @@ func handleConnection(conn net.Conn) error {
 		return err
 	}
 
-	request := string(requestBuf)
-	lines := strings.Split(request, "\n")
+	request, err := http.ParseRequest(requestBuf)
+	if err != nil {
+		return err
+	}
 
-	fmt.Println(lines[0])
+	fmt.Println(request)
 
 	response := `HTTP/1.1 200 OK
 Content-Type: text/plain
